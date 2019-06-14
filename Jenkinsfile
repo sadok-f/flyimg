@@ -14,7 +14,7 @@ pipeline {
                
             }
         }
-        stage('Docker build') {
+        stage('Docker push') {
              agent any
             steps {
                  sh 'docker push flyimg'
