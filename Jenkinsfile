@@ -10,14 +10,14 @@ pipeline {
         stage('Docker build') {
              agent any
             steps {
-                docker build . -t flyimg
+                 sh 'docker build . -t flyimg'
                
             }
         }
         stage('Docker build') {
              agent any
             steps {
-                docker push flyimg
+                 sh 'docker push flyimg'
                
             }
         }
