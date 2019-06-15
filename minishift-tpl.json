@@ -242,6 +242,12 @@
       "description": "Set this to the relative path to your project if it is not in the root of your repository."
     },
     {
+      "name": "APPLICATION_DOMAIN",
+      "displayName": "Application Hostname",
+      "description": "The exposed hostname that will route to Flyimg service, if left blank a value will be defaulted.",
+      "value": ""
+      },
+    {
       "name": "GITHUB_WEBHOOK_SECRET",
       "displayName": "GitHub Webhook Secret",
       "description": "Github trigger secret.  A difficult to guess string encoded as part of the webhook URL.  Not encrypted.",
