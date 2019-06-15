@@ -170,14 +170,14 @@
               "name": "flyimg-app",
               "image": " ",
               "ports": [{
-                "containerPort": 8080
+                "containerPort": 80
               }],
               "readinessProbe": {
                 "timeoutSeconds": 3,
                 "initialDelaySeconds": 3,
                 "httpGet": {
                   "path": "/",
-                  "port": 8080
+                  "port": 80
                 }
               },
               "livenessProbe": {
@@ -185,7 +185,7 @@
                 "initialDelaySeconds": 30,
                 "httpGet": {
                   "path": "/",
-                  "port": 8080
+                  "port": 80
                 }
               },
               "resources": {
