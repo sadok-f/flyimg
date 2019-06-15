@@ -14,11 +14,10 @@
   },
   "message": "The following service(s) have been created in your project: ${NAME}.\n",
   "labels": {
-      "template": "flyimg-app",
-      "app": "flyimg-app"
+    "template": "flyimg-app",
+    "app": "flyimg-app"
   },
-  "objects": [
-    {
+  "objects": [{
       "kind": "Secret",
       "apiVersion": "v1",
       "metadata": {
@@ -35,13 +34,11 @@
         }
       },
       "spec": {
-        "ports": [
-          {
-            "name": "web",
-            "port": 8080,
-            "targetPort": 8080
-          }
-        ],
+        "ports": [{
+          "name": "web",
+          "port": 8080,
+          "targetPort": 8080
+        }],
         "selector": {
           "name": "${NAME}"
         }
@@ -106,8 +103,7 @@
             "name": "${NAME}:latest"
           }
         },
-        "triggers": [
-          {
+        "triggers": [{
             "type": "ImageChange"
           },
           {
@@ -145,8 +141,7 @@
         "strategy": {
           "type": "Recreate"
         },
-        "triggers": [
-          {
+        "triggers": [{
             "type": "ImageChange",
             "imageChangeParams": {
               "automatic": true,
@@ -175,45 +170,40 @@
             }
           },
           "spec": {
-            "containers": [
-              {
-                "name": "flyimg-app",
-                "image": " ",
-                "ports": [
-                  {
-                    "containerPort": 8080
-                  }
-                ],
-                "readinessProbe": {
-                  "timeoutSeconds": 3,
-                  "initialDelaySeconds": 3,
-                  "httpGet": {
-                    "path": "/",
-                    "port": 8080
-                  }
-                },
-                "livenessProbe": {
-                  "timeoutSeconds": 3,
-                  "initialDelaySeconds": 30,
-                  "httpGet": {
-                    "path": "/",
-                    "port": 8080
-                  }
-                },
-                "resources": {
-                  "limits": {
-                    "memory": "${MEMORY_LIMIT}"
-                  }
+            "containers": [{
+              "name": "flyimg-app",
+              "image": " ",
+              "ports": [{
+                "containerPort": 8080
+              }],
+              "readinessProbe": {
+                "timeoutSeconds": 3,
+                "initialDelaySeconds": 3,
+                "httpGet": {
+                  "path": "/",
+                  "port": 8080
+                }
+              },
+              "livenessProbe": {
+                "timeoutSeconds": 3,
+                "initialDelaySeconds": 30,
+                "httpGet": {
+                  "path": "/",
+                  "port": 8080
+                }
+              },
+              "resources": {
+                "limits": {
+                  "memory": "${MEMORY_LIMIT}"
                 }
               }
-            ]
+            }]
           }
         }
       }
-    },
+    }
   ],
-  "parameters": [
-    {
+  "parameters": [{
       "name": "NAME",
       "displayName": "Name",
       "description": "The name assigned to all of the frontend objects defined in this template.",
