@@ -218,7 +218,7 @@
       "displayName": "Name",
       "description": "The name assigned to all of the frontend objects defined in this template.",
       "required": true,
-      "value": "flyimg-app"
+      "value": "flyimg"
     },
     {
       "name": "NAMESPACE",
