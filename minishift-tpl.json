@@ -92,7 +92,7 @@
           "dockerStrategy": {
             "from": {
               "kind": "ImageStreamTag",
-              "name": "docker-app"
+              "name": "docker-app:latest"
             }
           }
         },
