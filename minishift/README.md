@@ -11,26 +11,13 @@
 minishift oc-env
 eval (minishift oc-env)
 
-# oc login -u system:admin
+    oc login -u system:admin
 # oc whoami
 
 ### Install anyuid addon
 Allows authenticated users to run images under a non pre-allocated UID:
 
     minishift addon apply anyuid
-
-
-
-oc new-project devproject --display-name="Dev Project"
-
-oc new-app https://github.com/sadok-f/flyimg --strategy=docker -o yaml > flyimg.yaml
-oc create -f flyimg.yaml
-
-oc expose svc/flyimg --hostname=flyimg.192.168.99.100.nip.io
-
-oc new-app -p NAMESPACE=devproject -f monitoring-template.yaml
-oc annotate ns devproject openshift.io/node-selector= --overwrite
-
 
 ## Jenkins
 
@@ -63,3 +50,9 @@ oc annotate ns devproject openshift.io/node-selector= --overwrite
  
 ### Create the prometheus instance
     oc process -f https://raw.githubusercontent.com/openshift/origin/master/examples/prometheus/prometheus-standalone.yaml | oc apply -f -
+
+## Prometheus
+    oc new-app -f minishift/prometheus.yaml -p NAMESPACE=devproject -n devproject
+
+## Grafana
+    oc new-app -f minishift/grafana.yaml -n devproject
