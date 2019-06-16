@@ -7,9 +7,6 @@ metadata:
     openshift.io/display-name: Flyimg App
     description: Flyimg app
     iconClass: icon-nodejs
-    openshift.io/provider-display-name: Red Hat, Inc.
-    openshift.io/support-url: https://access.redhat.com
-    template.openshift.io/bindable: 'false'
 message: 'The following service(s) have been created in your project: ${NAME}.'
 labels:
   template: flyimg-app
@@ -41,28 +38,6 @@ objects:
     to:
       kind: Service
       name: "${NAME}"
-- kind: ImageStream
-  metadata:
-    annotations:
-      openshift.io/generated-by: OpenShiftNewApp
-    creationTimestamp: null
-    labels:
-      app: flyimg
-    name: docker-app
-  spec:
-    lookupPolicy:
-      local: false
-    tags:
-    - annotations:
-        openshift.io/imported-from: flyimg/docker-app
-      from:
-        kind: DockerImage
-        name: flyimg/docker-app
-      generation: null
-      importPolicy: {}
-      name: latest
-      referencePolicy:
-        type: ""
 - kind: ImageStream
   apiVersion: v1
   metadata:
