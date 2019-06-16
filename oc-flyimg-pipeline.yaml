@@ -7,19 +7,14 @@ spec:
     jenkinsPipelineStrategy:
       jenkinsfile: |-
         // path of the template to use
-        def templatePath = 'https://raw.githubusercontent.com/sadok-f/flyimg/master/minishift-tpl.json'
+        def templatePath = 'https://raw.githubusercontent.com/sadok-f/flyimg/master/minishift-tpl.yaml'
         // name of the template that will be created
         def templateName = 'flyimg-app'
         // NOTE, the "pipeline" directive/closure from the declarative pipeline syntax needs to include, or be nested outside,
         // and "openshift" directive/closure from the OpenShift Client Plugin for Jenkins.  Otherwise, the declarative pipeline engine
         // will not be fully engaged.
         pipeline {
-            agent {
-              node {
-                // spin up a php slave pod to run this build on
-                label 'php'
-              }
-            }
+            agent any
             options {
                 // set a timeout of 20 minutes for this pipeline
                 timeout(time: 20, unit: 'MINUTES')
