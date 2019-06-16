@@ -34,7 +34,7 @@
                 <p>
                     <img src="/upload/w_300/https://raw.githubusercontent.com/flyimg/graphic-assets/master/logo/raster/flyimg-logo-rgb.png">
                 </p>
-                <h2 id="hello-from-flyimg">Hello from Flyimg</h2>
+                <h2 id="hello-from-flyimg">Hello from Flyimg v2</h2>
 
                 <h3 id="the-image-above-logo-has-been-served-using-flyimg.">The image above (logo) has been served using
                     flyimg.</h3>
