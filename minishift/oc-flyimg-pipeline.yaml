@@ -7,7 +7,7 @@ spec:
     jenkinsPipelineStrategy:
       jenkinsfile: |-
         // path of the template to use
-        def templatePath = 'https://raw.githubusercontent.com/sadok-f/flyimg/master/minishift-tpl.yaml'
+        def templatePath = 'https://raw.githubusercontent.com/sadok-f/flyimg/master/minishift/minishift-tpl.yaml'
         // name of the template that will be created
         def templateName = 'flyimg-app'
         // NOTE, the "pipeline" directive/closure from the declarative pipeline syntax needs to include, or be nested outside,
