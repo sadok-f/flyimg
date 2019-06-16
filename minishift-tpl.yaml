@@ -42,6 +42,28 @@ objects:
       kind: Service
       name: "${NAME}"
 - kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: flyimg
+    name: docker-app
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        openshift.io/imported-from: flyimg/docker-app
+      from:
+        kind: DockerImage
+        name: flyimg/docker-app
+      generation: null
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: ""
+- kind: ImageStream
   apiVersion: v1
   metadata:
     name: "${NAME}"
