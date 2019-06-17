@@ -5,14 +5,17 @@
     minishift config set vm-driver virtualbox
 
 ### Start Minishift
-    minishift start
+    minishift start --memory=6GB
 
+### Export oc command
+    minishift oc-env
+    eval (minishift oc-env)
 
-minishift oc-env
-eval (minishift oc-env)
-
+### Login as Admin
     oc login -u system:admin
-# oc whoami
+
+### Create Dev Project
+    oc new-project devproject --display-name="Dev Project"
 
 ### Install anyuid addon
 Allows authenticated users to run images under a non pre-allocated UID:
