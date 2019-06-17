@@ -12,3 +12,7 @@ path:
    defaults: { _controller: 'Core\Controller\DefaultController::pathAction', imageSrc: '' }
    requirements:
       imageSrc: .+
+
+metrics:
+   path : /metrics
+   defaults: { _controller: 'Core\Controller\DefaultController::metricsAction' }

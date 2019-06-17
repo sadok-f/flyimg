@@ -3,6 +3,8 @@
 namespace Core\Controller;
 
 use Core\Entity\Response;
+use \Prometheus\CollectorRegistry;
+use \Prometheus\RenderTextFormat;
 
 class DefaultController extends CoreController
 {
@@ -44,5 +46,21 @@ class DefaultController extends CoreController
         $this->response->generatePathResponse($image);
 
         return $this->response;
+    }
+
+    /**
+     * @return string
+     */
+    public function metricsAction()
+    {
+        
+        $adapter = new \Prometheus\Storage\InMemory();
+
+        $registry = new CollectorRegistry($adapter);
+        $renderer = new RenderTextFormat();
+        $result = $renderer->render($registry->getMetricFamilySamples());
+        header('Content-type: ' . RenderTextFormat::MIME_TYPE);
+        echo $result;
+        exit;
     }
 }
