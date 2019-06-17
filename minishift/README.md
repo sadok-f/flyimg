@@ -55,7 +55,30 @@ Allows authenticated users to run images under a non pre-allocated UID:
     oc process -f https://raw.githubusercontent.com/openshift/origin/master/examples/prometheus/prometheus-standalone.yaml | oc apply -f -
 
 ## Prometheus
-    oc new-app -f minishift/prometheus.yaml -p NAMESPACE=devproject -n devproject
+### Create prometheus-data folder in the host
+    minishift ssh 'sudo mkdir -p /var/lib/prometheus-data'
+
+### Get the router password
+    oc set env dc router -n default --list|grep STATS_PASSWORD|awk -F"=" '{print $2}'
+
+### Delpoy Prometheus
+    oc new-app -f minishift/prometheus.yaml --param ROUTER_PASSWORD={REPLACE_WITH_ROUTER_PASSWORD} --param NAMESPACE=devproject
+
+### Since Prometheus needs to use a local disk to write its metrics add the privileged SCC to the prometheus service account:
+    oc adm policy add-scc-to-user privileged system:serviceaccount:devproject:prometheus
+
+### Make sure your Prometheus pod is running:
+    oc get pod -o wide
+
+## Node Exporter
+### Create folder
+    minishift ssh 'sudo mkdir -p /var/lib/node_exporter/textfile_collector'
+
+### Elevated Access
+    oc adm policy add-scc-to-user privileged system:serviceaccount:devproject:default
+
+### Instantiate the Template
+    oc new-app -f node-exporter.yaml
 
 ## Grafana
     oc new-app -f minishift/grafana.yaml -n devproject

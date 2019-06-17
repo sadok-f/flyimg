@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: node-exporter
+  annotations:
+    "openshift.io/display-name": Node Exporter
+    description: |
+      Node Exporter for use with Prometheus on Red Hat OpenShift - collect and gather metrics from nodes, services, and the infrastructure.
+    iconClass: icon-cogs
+    tags: "monitoring,node-exporter,time-series"
+parameters:
+- description: The location of the prometheus image
+  name: IMAGE_NODE_EXPORTER
+  value: wkulhanek/node-exporter:latest
+objects:
+
+- apiVersion: extensions/v1beta1
+  kind: DaemonSet
+  metadata:
+    name: node-exporter
+  spec:
+    template:
+      metadata:
+        labels:
+          app: node-exporter
+        name: node-exporter
+        annotations:
+          prometheus.io/scrape: "true"
+          prometheus.io/port: "9100"
+      spec:
+        hostPID: true
+        hostNetwork: true
+        containers:
+        - image: ${IMAGE_NODE_EXPORTER}
+          imagePullPolicy: IfNotPresent
+          name: node-exporter
+          ports:
+          - containerPort: 9100
+            hostPort: 9100
+            protocol: TCP
+            name: scrape
+          securityContext:
+            privileged: true
+          args:
+            - --path.procfs
+            - /host/proc
+            - --path.sysfs
+            - /host/sys
+            - --collector.filesystem.ignored-mount-points
+            - '"^/(sys|proc|dev|host|etc)($|/)"'
+            - --collector.textfile.directory
+            - /textfile_collector
+          volumeMounts:
+            - name: dev
+              mountPath: /host/dev
+            - name: proc
+              mountPath: /host/proc
+            - name: sys
+              mountPath: /host/sys
+            - name: rootfs
+              mountPath: /rootfs
+            - name: textfile-collector
+              mountPath: /textfile_collector
+        volumes:
+          - name: proc
+            hostPath:
+              path: /proc
+          - name: dev
+            hostPath:
+              path: /dev
+          - name: sys
+            hostPath:
+              path: /sys
+          - name: rootfs
+            hostPath:
+              path: /
+          - name: textfile-collector
+            hostPath:
+              path: /var/lib/node_exporter/textfile_collector
