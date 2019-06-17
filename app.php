@@ -6,6 +6,9 @@ use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\ExceptionHandler;
 use Symfony\Component\Routing\RouteCollection;
 
+use \Prometheus\CollectorRegistry;
+use \Prometheus\RenderTextFormat;
+
 $app = new Silex\Application();
 
 /** @var \Core\Entity\AppParameters $app['params'] */
@@ -101,6 +104,22 @@ if (!empty($argv[1]) && !empty($argv[2]) && $argv[1] == 'encrypt') {
     printf("Hashed request: %s\n", $app['image.handler']->securityHandler()->encrypt($argv[2]));
     return;
 }
+
+$app['prometheus.registry'] = function (\Silex\Application $app) {
+    $prometheusAdapter = new \Prometheus\Storage\InMemory();
+    $collectionRegistry =  new CollectorRegistry($prometheusAdapter);
+    
+    $counter = $collectionRegistry->getOrRegisterCounter(
+            'http',
+            'requests_total',
+            'total request count',
+            ['code']
+        );
+
+    $counter->inc(['200']);
+
+    return $collectionRegistry;
+};
 
 /** debug conf */
 $app['debug'] = $app['params']->parameterByKey('debug');

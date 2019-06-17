@@ -182,6 +182,9 @@ objects:
       # `labelmap` relabeling action.
       
       scrape_configs:
+      - job_name: 'flyimg-app'
+        static_configs:
+        - targets: ['flyimg-app']
         # Scrape config for API servers.
         #
         # Kubernetes exposes API servers as endpoints to the default/kubernetes
