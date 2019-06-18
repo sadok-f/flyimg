@@ -38,6 +38,19 @@ objects:
     name: "${NAME}"
   spec:
     host: "${APPLICATION_DOMAIN}"
+    port:
+      targetPort: web
+    to:
+      kind: Service
+      name: "${NAME}"
+- kind: Route
+  apiVersion: v1
+  metadata:
+    name: "${NAME}-metrics"
+  spec:
+    host: ""
+    port:
+      targetPort: metrics
     to:
       kind: Service
       name: "${NAME}"
