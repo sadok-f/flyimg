@@ -9,7 +9,7 @@ In this tutorial we're going to explore how to deploy and run a Flyimg applicati
     minishift config set vm-driver virtualbox
 
 ### Start Minishift
-    minishift start --memory=6GB
+    minishift start --memory=8GB
 
 ### Export oc command
     minishift oc-env
