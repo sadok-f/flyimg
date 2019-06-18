@@ -1,5 +1,6 @@
 # Deploy Flyimg on Minishift
-This is a small tutorial show how to create 
+In this tutorial we're going to explore how to deploy and run a Flyimg application in [Minishift](https://www.okd.io/minishift/) (Run OpenShift locally).
+
 ## Minishift
 ### Install Minishift
     brew cask install minishift
@@ -30,6 +31,9 @@ It might the first build for Jenkins fail and it needs to be deployed again, via
 ### Get available routes
     oc get route
 
+Login to Jenkins with your Minishift developer credentials
+
+## Deploy Flyimg on Minishift using Jenkins Pipeline
 ### Install anyuid addon
 Allows authenticated users to run images under a non pre-allocated UID
 
@@ -40,13 +44,13 @@ Allows authenticated users to run images under a non pre-allocated UID
     cd flyimg
 
 ### Create the base docker image
-    oc create -f minishift/oc-docker-app-image.yaml -n devproject
+    oc create -f minishift/oc-docker-app-image.yaml
 
 ### Create jenkins pipeline
     oc create -f minishift/oc-flyimg-pipeline.yaml
 
 ### Start the pipeline
-    oc start-build oc-flyimg-pipeline -n devproject
+    oc start-build oc-flyimg-pipeline
 
 
 ## Prometheus
