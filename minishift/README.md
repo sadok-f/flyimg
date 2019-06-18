@@ -1,4 +1,7 @@
-### instal Minishift
+# Deploy Flyimg on Minishift
+This is a small tutorial show how to create 
+## Minishift
+### Install Minishift
     brew cask install minishift
 
 ### Set VirtualBox as VM-Driver
@@ -11,11 +14,11 @@
     minishift oc-env
     eval (minishift oc-env)
 
-### Login as Admin
-    oc login -u system:admin
-
 ### Create Dev Project
     oc new-project devproject --display-name="Dev Project"
+
+### Login as Admin
+    oc login -u system:admin
 
 ### Install anyuid addon
 Allows authenticated users to run images under a non pre-allocated UID:
