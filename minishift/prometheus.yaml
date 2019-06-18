@@ -184,7 +184,7 @@ objects:
       scrape_configs:
       - job_name: 'flyimg-app'
         static_configs:
-        - targets: ['flyimg-app']
+        - targets: ['flyimg-app:9253/metrics']
         # Scrape config for API servers.
         #
         # Kubernetes exposes API servers as endpoints to the default/kubernetes

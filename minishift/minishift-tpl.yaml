@@ -29,6 +29,11 @@ objects:
       targetPort: 80
     selector:
       name: "${NAME}"
+    - name: metrics
+      port: 9253
+      targetPort: 9253
+    selector:
+      name: "${NAME}"
 - kind: Route
   apiVersion: v1
   metadata:
