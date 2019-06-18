@@ -20,18 +20,20 @@ This is a small tutorial show how to create
 ### Login as Admin
     oc login -u system:admin
 
-### Install anyuid addon
-Allows authenticated users to run images under a non pre-allocated UID:
-
-    minishift addon apply anyuid
-
 ## Jenkins
 
 ### Install Jenkins
     oc new-app jenkins-ephemeral
+NOTE:
+It might the first build for Jenkins fail and it needs to be deployed again, via the Web Console -> Deployment -> Jenkins -> Delpoy
 
 ### Get available routes
     oc get route
+
+### Install anyuid addon
+Allows authenticated users to run images under a non pre-allocated UID
+
+    minishift addon apply anyuid
 
 ### Clone Flyimg repo
     git clone https://github.com/sadok-f/flyimg.git
