@@ -21,8 +21,8 @@ In this tutorial we're going to explore how to deploy and run a Flyimg applicati
 ### Login as Admin
     oc login -u system:admin
 
-## Jenkins
 
+## Jenkins
 ### Install Jenkins
     oc new-app jenkins-ephemeral
 NOTE:
@@ -32,6 +32,7 @@ It might the first build for Jenkins fail and it needs to be deployed again, via
     oc get route
 
 Login to Jenkins with your Minishift developer credentials
+
 
 ## Deploy Flyimg on Minishift using Jenkins Pipeline
 ### Install anyuid addon
@@ -45,6 +46,10 @@ Allows authenticated users to run images under a non pre-allocated UID
 
 ### Create the base docker image
     oc create -f minishift/oc-docker-app-image.yaml
+NOTE:
+It might be the image not properly created, you can replace it if there's any errors:
+
+    oc replace -f minishift/oc-docker-app-image.yaml
 
 ### Create jenkins pipeline
     oc create -f minishift/oc-flyimg-pipeline.yaml
@@ -52,16 +57,6 @@ Allows authenticated users to run images under a non pre-allocated UID
 ### Start the pipeline
     oc start-build oc-flyimg-pipeline
 
-
-## Prometheus
-### Create the prom secret
-    oc create secret generic prom --from-file=minishift/prometheus.yml
- 
-### Create the prom-alerts secret
-    oc create secret generic prom-alerts --from-file=minishift/alertmanager.yml
- 
-### Create the prometheus instance
-    oc process -f https://raw.githubusercontent.com/openshift/origin/master/examples/prometheus/prometheus-standalone.yaml | oc apply -f -
 
 ## Prometheus
 ### Create prometheus-data folder in the host
@@ -74,7 +69,7 @@ Allows authenticated users to run images under a non pre-allocated UID
     oc set env dc router -n default --list|grep STATS_PASSWORD|awk -F"=" '{print $2}'
 
 ### Delpoy Prometheus
-    oc new-app -f minishift/prometheus.yaml --param ROUTER_PASSWORD={REPLACE_WITH_ROUTER_PASSWORD} --param NAMESPACE=devproject
+    oc new-app -f minishift/prometheus.yaml --param ROUTER_PASSWORD=F779sdmZ1C --param NAMESPACE=devproject
 
 ### Since Prometheus needs to use a local disk to write its metrics add the privileged SCC to the prometheus service account:
     oc adm policy add-scc-to-user privileged system:serviceaccount:devproject:prometheus
@@ -85,6 +80,8 @@ Allows authenticated users to run images under a non pre-allocated UID
 ## Node Exporter
 ### Create folder
     minishift ssh 'sudo mkdir -p /var/lib/node_exporter/textfile_collector'
+    minishift ssh 'sudo chmod 777 -R /var/lib/node_exporter/textfile_collector'
+    minishift ssh 'sudo chcon -Rt svirt_sandbox_file_t /var/lib/node_exporter/textfile_collector'
 
 ### Elevated Access
     oc adm policy add-scc-to-user privileged system:serviceaccount:devproject:default
@@ -93,4 +90,4 @@ Allows authenticated users to run images under a non pre-allocated UID
     oc new-app -f minishift/node-exporter.yaml
 
 ## Grafana
-    oc new-app -f minishift/grafana.yaml -n devproject
+    oc new-app -f minishift/grafana.yaml

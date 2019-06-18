@@ -6,7 +6,6 @@ metadata:
   annotations:
     openshift.io/display-name: Flyimg App
     description: Flyimg app
-    iconClass: icon-nodejs
 message: 'The following service(s) have been created in your project: ${NAME}.'
 labels:
   template: flyimg-app
@@ -155,7 +154,7 @@ parameters:
   value: openshift
 - name: MEMORY_LIMIT
   displayName: Memory Limit
-  description: Maximum amount of memory the Flyimg§ container can use.
+  description: Maximum amount of memory the Flyimg container can use.
   required: true
   value: 512Mi
 - name: SOURCE_REPOSITORY_URL
