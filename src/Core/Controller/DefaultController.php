@@ -29,14 +29,6 @@ class DefaultController extends CoreController
 
         $this->response->generateImageResponse($image);
 
-        $collectionRegistry = $this->app['prometheus.registry']->getMetricFamilySamples();
-         $counter = $collectionRegistry->getOrRegisterCounter(
-            'http',
-            'requests_total',
-            'total request count',
-            ['code']
-        );
-        $counter->inc(['200']);
         return $this->response;
     }
 
@@ -54,17 +46,5 @@ class DefaultController extends CoreController
         $this->response->generatePathResponse($image);
 
         return $this->response;
-    }
-
-    /**
-     * @return string
-     */
-    public function metricsAction()
-    {
-        $renderer = new RenderTextFormat();
-        $result = $renderer->render($this->app['prometheus.registry']->getMetricFamilySamples());
-        header('Content-type: ' . RenderTextFormat::MIME_TYPE);
-        echo $result;
-        exit;
     }
 }

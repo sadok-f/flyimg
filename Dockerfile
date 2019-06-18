@@ -10,6 +10,9 @@ RUN usermod -u 1000 www-data && \
 
 RUN composer install
 
+RUN chmod +x php-fpm_exporter
+COPY config/prometheus_exporter.conf /etc/supervisor/conf.d/prometheus_exporter.conf
+
 EXPOSE 80
 
 CMD /usr/bin/supervisord
