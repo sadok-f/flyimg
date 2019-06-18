@@ -57,6 +57,9 @@ Allows authenticated users to run images under a non pre-allocated UID:
 ## Prometheus
 ### Create prometheus-data folder in the host
     minishift ssh 'sudo mkdir -p /var/lib/prometheus-data'
+    minishift ssh 'sudo chmod 777 -R /var/lib/prometheus-data'
+    minishift ssh 'sudo chcon -Rt svirt_sandbox_file_t /var/lib/prometheus-data/'
+
 
 ### Get the router password
     oc set env dc router -n default --list|grep STATS_PASSWORD|awk -F"=" '{print $2}'
@@ -78,7 +81,7 @@ Allows authenticated users to run images under a non pre-allocated UID:
     oc adm policy add-scc-to-user privileged system:serviceaccount:devproject:default
 
 ### Instantiate the Template
-    oc new-app -f node-exporter.yaml
+    oc new-app -f minishift/node-exporter.yaml
 
 ## Grafana
     oc new-app -f minishift/grafana.yaml -n devproject
